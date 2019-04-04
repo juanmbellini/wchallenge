@@ -43,5 +43,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+
+        <!-- Webapps Commons Exceptions -->
+        <dependency>
+            <groupId>com.bellotapps.webapps</groupId>
+            <artifactId>webapps-commons-exceptions</artifactId>
+        </dependency>
     </dependencies>
 </project>
