@@ -16,6 +16,7 @@
 
 package com.github.juanmbellini.wchallenge.services;
 
+import com.bellotapps.webapps_commons.exceptions.NoSuchEntityException;
 import com.github.juanmbellini.wchallenge.models.Album;
 import com.github.juanmbellini.wchallenge.models.Photo;
 import com.github.juanmbellini.wchallenge.models.User;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * A port into the application that allows {@link User} management.
  */
-public interface UserService {
+public interface JsonPlaceholderWrapper {
 
     /**
      * Retrieves all the {@link User}s.
@@ -53,14 +54,16 @@ public interface UserService {
      *
      * @param userId The {@link User}'s id.
      * @return The {@link List} of {@link Album}s belonging to the {@link User} with the given {@code userId}.
+     * @throws NoSuchEntityException If there is no {@link User} with the given {@code userId}.
      */
-    List<Album> getUserAlbums(final long userId);
+    List<Album> getUserAlbums(final long userId) throws NoSuchEntityException;
 
     /**
      * Retrieves all the {@link Photo}s belonging to a given {@link User}.
      *
      * @param userId The {@link User}'s id.
      * @return The {@link List} of {@link Photo}s belonging to the {@link User} with the given {@code userId}.
+     * @throws NoSuchEntityException If there is no {@link User} with the given {@code userId}.
      */
-    List<Photo> getUserPhotos(final long userId);
+    List<Photo> getUserPhotos(final long userId) throws NoSuchEntityException;
 }

@@ -21,5 +21,6 @@
     <modules>
         <module>wchallenge-services</module>
         <module>wchallenge-repositories</module>
+        <module>wchallenge-jph-client</module>
     </modules>
 </project>

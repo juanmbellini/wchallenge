@@ -21,5 +21,6 @@
     <modules>
         <module>wchallenge-rest-adapter</module>
         <module>wchallenge-spring-data-adapter</module>
+        <module>wchallenge-jph-client-adapter</module>
     </modules>
 </project>

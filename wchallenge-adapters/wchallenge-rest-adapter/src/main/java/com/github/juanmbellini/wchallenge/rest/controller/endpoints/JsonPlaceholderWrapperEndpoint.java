@@ -17,7 +17,7 @@
 package com.github.juanmbellini.wchallenge.rest.controller.endpoints;
 
 import com.github.juanmbellini.wchallenge.models.User;
-import com.github.juanmbellini.wchallenge.services.UserService;
+import com.github.juanmbellini.wchallenge.services.JsonPlaceholderWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,20 +25,20 @@ import org.springframework.stereotype.Component;
  * API endpoint for {@link User} management.
  */
 @Component
-public class UserEndpoint {
+public class JsonPlaceholderWrapperEndpoint {
 
     /**
-     * The {@link UserService} that will be used to manage {@link User}s.
+     * The {@link JsonPlaceholderWrapper} that will be used to manage {@link User}s.
      */
-    private final UserService userService;
+    private final JsonPlaceholderWrapper jsonPlaceholderWrapper;
 
     /**
      * Constructor.
      *
-     * @param userService The {@link UserService} that will be used to manage {@link User}s.
+     * @param jsonPlaceholderWrapper The {@link JsonPlaceholderWrapper} that will be used to manage {@link User}s.
      */
     @Autowired
-    public UserEndpoint(final UserService userService) {
-        this.userService = userService;
+    public JsonPlaceholderWrapperEndpoint(final JsonPlaceholderWrapper jsonPlaceholderWrapper) {
+        this.jsonPlaceholderWrapper = jsonPlaceholderWrapper;
     }
 }

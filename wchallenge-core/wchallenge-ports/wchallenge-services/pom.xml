@@ -23,7 +23,13 @@
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>wchallenge-models</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <!-- Webapps Commons Exceptions -->
+        <dependency>
+            <groupId>com.bellotapps.webapps</groupId>
+            <artifactId>webapps-commons-exceptions</artifactId>
         </dependency>
     </dependencies>
 </project>
