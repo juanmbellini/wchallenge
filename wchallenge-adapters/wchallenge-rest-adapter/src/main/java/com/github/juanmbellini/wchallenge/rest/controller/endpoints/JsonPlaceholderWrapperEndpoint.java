@@ -17,7 +17,9 @@
 package com.github.juanmbellini.wchallenge.rest.controller.endpoints;
 
 import com.bellotapps.webapps_commons.config.JerseyController;
-import com.github.juanmbellini.wchallenge.models.User;
+import com.github.juanmbellini.wchallenge.rest.controller.dtos.AlbumDto;
+import com.github.juanmbellini.wchallenge.rest.controller.dtos.PhotoDto;
+import com.github.juanmbellini.wchallenge.rest.controller.dtos.UserDto;
 import com.github.juanmbellini.wchallenge.services.JsonPlaceholderWrapperService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +31,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.stream.Collectors;
 
 /**
- * API endpoint for {@link User} management.
+ * API endpoint that acts as an adapter of the {@link JsonPlaceholderWrapperService}.
  */
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)
@@ -43,15 +46,15 @@ public class JsonPlaceholderWrapperEndpoint {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonPlaceholderWrapperEndpoint.class);
 
-    /**q
-     * The {@link JsonPlaceholderWrapperService} that will be used to manage {@link User}s.
+    /**
+     * The {@link JsonPlaceholderWrapperService}.
      */
     private final JsonPlaceholderWrapperService jsonPlaceholderWrapperService;
 
     /**
      * Constructor.
      *
-     * @param jsonPlaceholderWrapperService The {@link JsonPlaceholderWrapperService} that will be used to manage {@link User}s.
+     * @param jsonPlaceholderWrapperService The {@link JsonPlaceholderWrapperService}.
      */
     @Autowired
     public JsonPlaceholderWrapperEndpoint(final JsonPlaceholderWrapperService jsonPlaceholderWrapperService) {
@@ -62,7 +65,9 @@ public class JsonPlaceholderWrapperEndpoint {
     @Path("users")
     public Response getUsers() {
         LOGGER.debug("Getting all users");
-        final var users = jsonPlaceholderWrapperService.getUsers();
+        final var users = jsonPlaceholderWrapperService.getUsers().stream()
+                .map(UserDto::fromJsonPlaceholderUser)
+                .collect(Collectors.toList());
         return Response.ok(users).build();
     }
 
@@ -70,7 +75,9 @@ public class JsonPlaceholderWrapperEndpoint {
     @Path("photos")
     public Response getPhotos() {
         LOGGER.debug("Getting all photos");
-        final var photos = jsonPlaceholderWrapperService.getAllPhotos();
+        final var photos = jsonPlaceholderWrapperService.getAllPhotos().stream()
+                .map(PhotoDto::fromJsonPlaceholderPhoto)
+                .collect(Collectors.toList());
         return Response.ok(photos).build();
     }
 
@@ -78,7 +85,9 @@ public class JsonPlaceholderWrapperEndpoint {
     @Path("albums")
     public Response getAlbums() {
         LOGGER.debug("Getting all albums");
-        final var albums = jsonPlaceholderWrapperService.getAllAlbums();
+        final var albums = jsonPlaceholderWrapperService.getAllAlbums().stream()
+                .map(AlbumDto::fromJsonPlaceholderAlbum)
+                .collect(Collectors.toList());
         return Response.ok(albums).build();
     }
 
@@ -86,7 +95,9 @@ public class JsonPlaceholderWrapperEndpoint {
     @Path("/users/{id : \\d+}/albums")
     public Response getUserAlbums(@PathParam("id") final long id) {
         LOGGER.debug("Getting all albums of user with id {}", id);
-        final var albums = jsonPlaceholderWrapperService.getUserAlbums(id);
+        final var albums = jsonPlaceholderWrapperService.getUserAlbums(id).stream()
+                .map(AlbumDto::fromJsonPlaceholderAlbum)
+                .collect(Collectors.toList());
         return Response.ok(albums).build();
     }
 
@@ -94,7 +105,9 @@ public class JsonPlaceholderWrapperEndpoint {
     @Path("/users/{id : \\d+}/photos")
     public Response getUserPhotos(@PathParam("id") final long id) {
         LOGGER.debug("Getting all photos of user with id {}", id);
-        final var photos = jsonPlaceholderWrapperService.getUserPhotos(id);
+        final var photos = jsonPlaceholderWrapperService.getUserPhotos(id).stream()
+                .map(PhotoDto::fromJsonPlaceholderPhoto)
+                .collect(Collectors.toList());
         return Response.ok(photos).build();
     }
 }

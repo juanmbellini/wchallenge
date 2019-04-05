@@ -16,10 +16,10 @@
 
 package com.github.juanmbellini.wchallenge.jph;
 
-import com.github.juanmbellini.wchallenge.models.Album;
 import com.github.juanmbellini.wchallenge.models.Comment;
-import com.github.juanmbellini.wchallenge.models.Photo;
-import com.github.juanmbellini.wchallenge.models.User;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderAlbum;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderPhoto;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderUser;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,50 +30,62 @@ import java.util.Optional;
 public interface JsonPlaceholderClient {
 
     /**
-     * Retrieves the {@link User}s in the JSONPlaceholder service.
+     * Retrieves the {@link JsonPlaceholderUser}s in the JSONPlaceholder service.
      *
-     * @return The {@link List} of {@link User}s in the JSONPlaceholder service.
+     * @return The {@link List} of {@link JsonPlaceholderUser}s in the JSONPlaceholder service.
      */
-    List<User> retrieveUsers();
+    List<JsonPlaceholderUser> retrieveUsers();
 
     /**
-     * Retrieves the {@link Photo}s in the JSONPlaceholder service.
+     * Retrieves the {@link JsonPlaceholderPhoto}s in the JSONPlaceholder service.
      *
-     * @return The {@link List} of {@link Photo}s in the JSONPlaceholder service.
+     * @return The {@link List} of {@link JsonPlaceholderPhoto}s in the JSONPlaceholder service.
      */
-    List<Photo> retrievePhotos();
+    List<JsonPlaceholderPhoto> retrievePhotos();
 
     /**
-     * Retrieves the {@link Album}s in the JSONPlaceholder service.
+     * Retrieves the {@link JsonPlaceholderAlbum}s in the JSONPlaceholder service.
      *
-     * @return The {@link List} of {@link Album}s in the JSONPlaceholder service.
+     * @return The {@link List} of {@link JsonPlaceholderAlbum}s in the JSONPlaceholder service.
      */
-    List<Album> retrieveAlbums();
+    List<JsonPlaceholderAlbum> retrieveAlbums();
 
     /**
-     * Retrieves the {@link User} with the given {@code userId}.
+     * Retrieves the {@link JsonPlaceholderUser} with the given {@code userId}.
      *
-     * @param userId The id of the {@link User} to be retrieved.
-     * @return An {@link Optional} holding the {@link User} with the given {@code userId} if it exists,
+     * @param userId The id of the {@link JsonPlaceholderUser} to be retrieved.
+     * @return An {@link Optional} holding the {@link JsonPlaceholderUser} with the given {@code userId} if it exists,
      * or empty otherwise.
      */
-    Optional<User> getUserById(final long userId);
+    Optional<JsonPlaceholderUser> getUserById(final long userId);
 
     /**
-     * Retrieves the {@link Album}s belonging to the {@link User} with the given {@code userId}.
+     * Indicates whether a {@link JsonPlaceholderUser} exists with the given {@code userId}.
      *
-     * @param userId The id of the {@link User} owning the {@link Album}s.
-     * @return The {@link Album}s belonging to the {@link User} with the given {@code userId}.
+     * @param userId The id of the {@link JsonPlaceholderUser} to be checked.
+     * @return {@code true} if the {@link JsonPlaceholderUser} exists, or {@code false} otherwise.
      */
-    List<Album> retrieveUserAlbums(final long userId);
+    boolean existsUserWithId(final long userId);
 
     /**
-     * Retrieves the {@link Photo}s belonging to the {@link User} with the given {@code userId}.
+     * Retrieves the {@link JsonPlaceholderAlbum}s belonging to the {@link JsonPlaceholderUser}
+     * with the given {@code userId}.
      *
-     * @param userId The id of the {@link User} owning the {@link Photo}s.
-     * @return The {@link Photo}s belonging to the {@link User} with the given {@code userId}.
+     * @param userId The id of the {@link JsonPlaceholderUser} owning the {@link JsonPlaceholderAlbum}s.
+     * @return The {@link JsonPlaceholderAlbum}s belonging to the {@link JsonPlaceholderUser}
+     * with the given {@code userId}.
      */
-    List<Photo> retrieveUserPhotos(final long userId);
+    List<JsonPlaceholderAlbum> retrieveUserAlbums(final long userId);
+
+    /**
+     * Retrieves the {@link JsonPlaceholderPhoto}s belonging to the {@link JsonPlaceholderUser}
+     * with the given {@code userId}.
+     *
+     * @param userId The id of the {@link JsonPlaceholderUser} owning the {@link JsonPlaceholderPhoto}s.
+     * @return The {@link JsonPlaceholderPhoto}s belonging to the {@link JsonPlaceholderUser}
+     * with the given {@code userId}.
+     */
+    List<JsonPlaceholderPhoto> retrieveUserPhotos(final long userId);
 
     /**
      * Retrieves the {@link Comment}s in the JSONPlaceholder service, applying filters for name and email.

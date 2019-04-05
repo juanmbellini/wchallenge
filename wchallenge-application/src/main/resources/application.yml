@@ -23,6 +23,10 @@ server:
     compression:
         enabled: true
 
+wchallenge:
+    jsonplacehoder:
+        url: "https://jsonplaceholder.typicode.com"
+
 ---
 # Configuration for Development Environment
 

@@ -18,9 +18,10 @@ package com.github.juanmbellini.wchallenge.domain;
 
 import com.bellotapps.webapps_commons.exceptions.NoSuchEntityException;
 import com.github.juanmbellini.wchallenge.jph.JsonPlaceholderClient;
-import com.github.juanmbellini.wchallenge.models.Album;
-import com.github.juanmbellini.wchallenge.models.Photo;
 import com.github.juanmbellini.wchallenge.models.User;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderAlbum;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderPhoto;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderUser;
 import com.github.juanmbellini.wchallenge.repositories.UserRepository;
 import com.github.juanmbellini.wchallenge.services.JsonPlaceholderWrapperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Manager for {@link User}s.
+ * Class implementing the business logic.
  */
 @Service
 public class Manager implements JsonPlaceholderWrapperService {
@@ -58,32 +59,32 @@ public class Manager implements JsonPlaceholderWrapperService {
 
 
     @Override
-    public List<User> getUsers() {
+    public List<JsonPlaceholderUser> getUsers() {
         return jsonPlaceholderClient.retrieveUsers();
     }
 
     @Override
-    public List<Photo> getAllPhotos() {
+    public List<JsonPlaceholderPhoto> getAllPhotos() {
         return jsonPlaceholderClient.retrievePhotos();
     }
 
     @Override
-    public List<Album> getAllAlbums() {
+    public List<JsonPlaceholderAlbum> getAllAlbums() {
         return jsonPlaceholderClient.retrieveAlbums();
     }
 
     @Override
-    public List<Album> getUserAlbums(final long userId) throws NoSuchEntityException {
+    public List<JsonPlaceholderAlbum> getUserAlbums(final long userId) throws NoSuchEntityException {
         return jsonPlaceholderClient.getUserById(userId)
-                .map(User::getId)
+                .map(JsonPlaceholderUser::getId)
                 .map(jsonPlaceholderClient::retrieveUserAlbums)
                 .orElseThrow(() -> new NoSuchEntityException("There is no user with the given id"));
     }
 
     @Override
-    public List<Photo> getUserPhotos(final long userId) throws NoSuchEntityException {
+    public List<JsonPlaceholderPhoto> getUserPhotos(final long userId) throws NoSuchEntityException {
         return jsonPlaceholderClient.getUserById(userId)
-                .map(User::getId)
+                .map(JsonPlaceholderUser::getId)
                 .map(jsonPlaceholderClient::retrieveUserPhotos)
                 .orElseThrow(() -> new NoSuchEntityException("There is no user with the given id"));
     }

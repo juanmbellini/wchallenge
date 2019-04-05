@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "wchallenge.jsonplacehoder.url",
+      "type": "java.lang.String",
+      "description": "The base URL of the Json Placeholder service."
+    }
+  ]
+}

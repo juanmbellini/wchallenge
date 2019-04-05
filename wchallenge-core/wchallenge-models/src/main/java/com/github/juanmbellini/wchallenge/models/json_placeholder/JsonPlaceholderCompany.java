@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.wchallenge.models;
-
-import org.springframework.util.Assert;
-
-import java.util.Objects;
+package com.github.juanmbellini.wchallenge.models.json_placeholder;
 
 /**
- * Represents a company of a {@link User}.
+ * Data transfer object for receiving company information from the Json Placeholder service.
  */
-public class Company {
+public class JsonPlaceholderCompany {
 
     /**
      * The company's name.
@@ -46,10 +42,10 @@ public class Company {
      * @param catchPhrase The company's catch phrase.
      * @param bs          The company's bs.
      */
-    public Company(final String name, final String catchPhrase, final String bs) {
-        Assert.hasText(name, "The name must have text");
-        Assert.hasText(catchPhrase, "The catch phrase must have text");
-        Assert.hasText(bs, "The bs must have text");
+    public JsonPlaceholderCompany(
+            final String name,
+            final String catchPhrase,
+            final String bs) {
         this.name = name;
         this.catchPhrase = catchPhrase;
         this.bs = bs;
@@ -75,32 +71,5 @@ public class Company {
      */
     public String getBs() {
         return bs;
-    }
-
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Company)) {
-            return false;
-        }
-        final var company = (Company) o;
-        return name.equals(company.name) && catchPhrase.equals(company.catchPhrase) && bs.equals(company.bs);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, catchPhrase, bs);
-    }
-
-    @Override
-    public String toString() {
-        return "Company{" +
-                "name='" + name + '\'' +
-                ", catchPhrase='" + catchPhrase + '\'' +
-                ", bs='" + bs + '\'' +
-                '}';
     }
 }

@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.juanmbellini.wchallenge.models;
-
-import org.springframework.util.Assert;
-
-import java.util.Objects;
+package com.github.juanmbellini.wchallenge.models.json_placeholder;
 
 /**
- * Represents a photo.
+ * Data transfer object for receiving photo information from the Json Placeholder service.
  */
-public class Photo {
+public class JsonPlaceholderPhoto {
 
     /**
      * The photo's id.
@@ -36,9 +32,9 @@ public class Photo {
     private final String title;
 
     /**
-     * The {@link Album} to which this photo belongs to.
+     * The id of the album to which the photo belongs to.
      */
-    private final Album album;
+    private final long albumId;
 
     /**
      * The url where the photo can be found.
@@ -55,18 +51,19 @@ public class Photo {
      *
      * @param id           The photo's id.
      * @param title        The photo's title.
-     * @param album        The {@link Album} to which this photo belongs to.
+     * @param albumId      The id of the album to which the photo belongs to.
      * @param url          The url where the photo can be found.
      * @param thumbnailUrl The url of the thumbnail of this photo.
      */
-    public Photo(final long id, final String title, final Album album, final String url, final String thumbnailUrl) {
-        Assert.hasText(title, "The title must have text");
-        Assert.hasText(url, "The url must have text");
-        Assert.hasText(thumbnailUrl, "The thumbnail url must have text");
-        Assert.notNull(album, "The album must not be null");
+    public JsonPlaceholderPhoto(
+            final long id,
+            final String title,
+            final long albumId,
+            final String url,
+            final String thumbnailUrl) {
         this.id = id;
         this.title = title;
-        this.album = album;
+        this.albumId = albumId;
         this.url = url;
         this.thumbnailUrl = thumbnailUrl;
     }
@@ -87,10 +84,10 @@ public class Photo {
     }
 
     /**
-     * @return The {@link Album} to which this photo belongs to.
+     * @return The id of the album to which the photo belongs to.
      */
-    public Album getAlbum() {
-        return album;
+    public long getAlbumId() {
+        return albumId;
     }
 
     /**
@@ -105,34 +102,5 @@ public class Photo {
      */
     public String getThumbnailUrl() {
         return thumbnailUrl;
-    }
-
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Photo)) {
-            return false;
-        }
-        final var photo = (Photo) o;
-        return id == photo.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Photo{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", album=" + album +
-                ", url='" + url + '\'' +
-                ", thumbnailUrl='" + thumbnailUrl + '\'' +
-                '}';
     }
 }

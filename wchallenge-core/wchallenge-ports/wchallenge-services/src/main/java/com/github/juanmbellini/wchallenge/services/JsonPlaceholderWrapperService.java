@@ -17,53 +17,55 @@
 package com.github.juanmbellini.wchallenge.services;
 
 import com.bellotapps.webapps_commons.exceptions.NoSuchEntityException;
-import com.github.juanmbellini.wchallenge.models.Album;
-import com.github.juanmbellini.wchallenge.models.Photo;
-import com.github.juanmbellini.wchallenge.models.User;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderAlbum;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderPhoto;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderUser;
 
 import java.util.List;
 
 /**
- * A port into the application that allows {@link User} management.
+ * A port into the application that allows accessing the Json Placeholder wrapper service.
  */
 public interface JsonPlaceholderWrapperService {
 
     /**
-     * Retrieves all the {@link User}s.
+     * Retrieves all the {@link JsonPlaceholderUser}s.
      *
-     * @return The {@link List} of {@link User}s.
+     * @return The {@link List} of {@link JsonPlaceholderUser}s.
      */
-    List<User> getUsers();
+    List<JsonPlaceholderUser> getUsers();
 
     /**
-     * Retrieves all the {@link Photo}s.
+     * Retrieves all the {@link JsonPlaceholderPhoto}s.
      *
-     * @return The {@link List} of {@link Photo}s.
+     * @return The {@link List} of {@link JsonPlaceholderPhoto}s.
      */
-    List<Photo> getAllPhotos();
+    List<JsonPlaceholderPhoto> getAllPhotos();
 
     /**
-     * Retrieves all the {@link Album}s.
+     * Retrieves all the {@link JsonPlaceholderAlbum}s.
      *
-     * @return The {@link List} of {@link Album}s.
+     * @return The {@link List} of {@link JsonPlaceholderAlbum}s.
      */
-    List<Album> getAllAlbums();
+    List<JsonPlaceholderAlbum> getAllAlbums();
 
     /**
-     * Retrieves all the {@link Album}s belonging to a given {@link User}.
+     * Retrieves all the {@link JsonPlaceholderAlbum}s belonging to a given {@link JsonPlaceholderUser}.
      *
-     * @param userId The {@link User}'s id.
-     * @return The {@link List} of {@link Album}s belonging to the {@link User} with the given {@code userId}.
-     * @throws NoSuchEntityException If there is no {@link User} with the given {@code userId}.
+     * @param userId The {@link JsonPlaceholderUser}'s id.
+     * @return The {@link List} of {@link JsonPlaceholderAlbum}s belonging to the {@link JsonPlaceholderUser}
+     * with the given {@code userId}.
+     * @throws NoSuchEntityException If there is no {@link JsonPlaceholderUser} with the given {@code userId}.
      */
-    List<Album> getUserAlbums(final long userId) throws NoSuchEntityException;
+    List<JsonPlaceholderAlbum> getUserAlbums(final long userId) throws NoSuchEntityException;
 
     /**
-     * Retrieves all the {@link Photo}s belonging to a given {@link User}.
+     * Retrieves all the {@link JsonPlaceholderPhoto}s belonging to a given {@link JsonPlaceholderUser}.
      *
-     * @param userId The {@link User}'s id.
-     * @return The {@link List} of {@link Photo}s belonging to the {@link User} with the given {@code userId}.
-     * @throws NoSuchEntityException If there is no {@link User} with the given {@code userId}.
+     * @param userId The {@link JsonPlaceholderUser}'s id.
+     * @return The {@link List} of {@link JsonPlaceholderPhoto}s belonging to the {@link JsonPlaceholderUser}
+     * with the given {@code userId}.
+     * @throws NoSuchEntityException If there is no {@link JsonPlaceholderUser} with the given {@code userId}.
      */
-    List<Photo> getUserPhotos(final long userId) throws NoSuchEntityException;
+    List<JsonPlaceholderPhoto> getUserPhotos(final long userId) throws NoSuchEntityException;
 }
