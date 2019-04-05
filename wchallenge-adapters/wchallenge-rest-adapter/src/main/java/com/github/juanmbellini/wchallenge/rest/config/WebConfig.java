@@ -16,6 +16,8 @@
 
 package com.github.juanmbellini.wchallenge.rest.config;
 
+import com.bellotapps.webapps_commons.config.EnableJerseyApplication;
+import com.bellotapps.webapps_commons.validation.jersey.EnableJerseyValidation;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,5 +28,12 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = {
         "com.github.juanmbellini.wchallenge.rest.controller"
 })
+@EnableJerseyApplication(basePackages = {
+        "com.github.juanmbellini.wchallenge.rest.controller.endpoints",
+        "com.bellotapps.webapps_commons.data_transfer.jersey.providers",
+}, errorHandlersPackages = {
+        "com.bellotapps.webapps_commons.error_handlers",
+})
+@EnableJerseyValidation
 public class WebConfig {
 }

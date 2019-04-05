@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * A port into the application that allows {@link User} management.
  */
-public interface JsonPlaceholderWrapper {
+public interface JsonPlaceholderWrapperService {
 
     /**
      * Retrieves all the {@link User}s.
