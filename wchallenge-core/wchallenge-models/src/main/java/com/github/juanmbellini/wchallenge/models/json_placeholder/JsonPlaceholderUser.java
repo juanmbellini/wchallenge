@@ -17,7 +17,7 @@
 package com.github.juanmbellini.wchallenge.models.json_placeholder;
 
 /**
- * Data transfer object for receiving user information from the Json Placeholder service.
+ * Represents a user of the Json Placeholder Service.
  */
 public class JsonPlaceholderUser {
 

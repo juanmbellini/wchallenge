@@ -16,8 +16,8 @@
 
 package com.github.juanmbellini.wchallenge.jph;
 
-import com.github.juanmbellini.wchallenge.models.Comment;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderAlbum;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderComment;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderPhoto;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderUser;
 
@@ -88,11 +88,12 @@ public interface JsonPlaceholderClient {
     List<JsonPlaceholderPhoto> retrieveUserPhotos(final long userId);
 
     /**
-     * Retrieves the {@link Comment}s in the JSONPlaceholder service, applying filters for name and email.
+     * Retrieves the {@link JsonPlaceholderComment}s in the JSONPlaceholder service,
+     * applying filters for name and email.
      *
      * @param nameFilter  Name filter.
      * @param emailFilter Email filter.
-     * @return A {@link List} of matching {@link Comment}s in the JSONPlaceholder service.
+     * @return A {@link List} of matching {@link JsonPlaceholderComment}s in the JSONPlaceholder service.
      */
-    List<Comment> retrieveComments(final String nameFilter, final String emailFilter);
+    List<JsonPlaceholderComment> retrieveComments(final String nameFilter, final String emailFilter);
 }

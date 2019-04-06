@@ -17,7 +17,7 @@
 package com.github.juanmbellini.wchallenge.models.json_placeholder;
 
 /**
- * Data transfer object for receiving photo information from the Json Placeholder service.
+ * Represents a photo of the Json Placeholder Service.
  */
 public class JsonPlaceholderPhoto {
 

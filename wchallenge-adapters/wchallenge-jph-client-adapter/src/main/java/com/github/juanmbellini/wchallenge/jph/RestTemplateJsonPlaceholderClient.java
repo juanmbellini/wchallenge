@@ -1,12 +1,12 @@
 package com.github.juanmbellini.wchallenge.jph;
 
 import com.bellotapps.webapps_commons.exceptions.ExternalServiceException;
-import com.bellotapps.webapps_commons.exceptions.NotImplementedException;
 import com.github.juanmbellini.wchallenge.jph.dtos.AlbumDto;
+import com.github.juanmbellini.wchallenge.jph.dtos.CommentDto;
 import com.github.juanmbellini.wchallenge.jph.dtos.PhotoDto;
 import com.github.juanmbellini.wchallenge.jph.dtos.UserDto;
-import com.github.juanmbellini.wchallenge.models.Comment;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderAlbum;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderComment;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderPhoto;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +15,13 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -61,6 +63,12 @@ public class RestTemplateJsonPlaceholderClient implements JsonPlaceholderClient 
      */
     private final ParameterizedTypeReference<List<PhotoDto>> photoDtoParameterizedTypeReference;
 
+    /**
+     * A {@link ParameterizedTypeReference} of {@link List} of {@link CommentDto} used to instantiate
+     * a {@link List} of {@link CommentDto} when receiving the data from the Json Placeholder service.
+     */
+    private final ParameterizedTypeReference<List<CommentDto>> commentDtoParameterizedTypeReference;
+
 
     /**
      * Constructor.
@@ -79,6 +87,8 @@ public class RestTemplateJsonPlaceholderClient implements JsonPlaceholderClient 
         this.albumDtoParameterizedTypeReference = new ParameterizedTypeReference<>() {
         };
         this.photoDtoParameterizedTypeReference = new ParameterizedTypeReference<>() {
+        };
+        this.commentDtoParameterizedTypeReference = new ParameterizedTypeReference<>() {
         };
     }
 
@@ -157,8 +167,24 @@ public class RestTemplateJsonPlaceholderClient implements JsonPlaceholderClient 
     }
 
     @Override
-    public List<Comment> retrieveComments(final String nameFilter, final String emailFilter) {
-        throw new NotImplementedException("Not implemented yet");
+    public List<JsonPlaceholderComment> retrieveComments(final String nameFilter, final String emailFilter) {
+        final var builder = new StringBuilder().append(baseUrl)
+                .append("/comments");
+        final List<String> args = new LinkedList<>();
+        if (StringUtils.hasText(nameFilter)) {
+            builder.append("?name={name}");
+            args.add(nameFilter);
+        }
+        if (StringUtils.hasText(emailFilter)) {
+            builder.append(args.isEmpty() ? "?" : "&");
+            builder.append("email={email}");
+            args.add(emailFilter);
+        }
+
+        return getList(commentDtoParameterizedTypeReference, builder.toString(), args.toArray())
+                .stream()
+                .map(dto -> (JsonPlaceholderComment) dto)
+                .collect(Collectors.toList());
     }
 
 
@@ -217,90 +243,4 @@ public class RestTemplateJsonPlaceholderClient implements JsonPlaceholderClient 
             throw new ExternalServiceException(SERVICE_NAME, "Exception encountered when accessing JsonPlaceholder", e);
         }
     }
-
-
-//    /**
-//     * Builds a {@link User} from the given {@code userDto}.
-//     *
-//     * @param userDto The {@link JsonPlaceholderUser} from where {@link User} data is taken.
-//     * @return The created {@link User}.
-//     */
-//    private static User fromDto(final JsonPlaceholderUser userDto) {
-//        return new User(
-//                userDto.getId(),
-//                userDto.getName(),
-//                userDto.getUsername(),
-//                userDto.getEmail(),
-//                fromDto(userDto.getAddress()),
-//                userDto.getPhone(),
-//                userDto.getWebsite(),
-//                fromDto(userDto.getCompany())
-//        );
-//    }
-//
-//    /**
-//     * Builds an {@link Address} from the given {@code addressDto}.
-//     *
-//     * @param addressDto The {@link JsonPlaceholderAddress} from where {@link Address} data is taken.
-//     * @return The created {@link Address}.
-//     */
-//    private static Address fromDto(final JsonPlaceholderAddress addressDto) {
-//        final var geo = addressDto.getGeoLocation();
-//        return new Address(
-//                addressDto.getStreet(),
-//                addressDto.getSuite(),
-//                addressDto.getCity(),
-//                addressDto.getZipCode(),
-//                new Address.GeoLocation(
-//                        geo.getLongitude(),
-//                        geo.getLatitude()
-//                )
-//        );
-//    }
-//
-//    /**
-//     * Builds a {@link Company} from the given {@code companyDto}.
-//     *
-//     * @param companyDto The {@link JsonPlaceholderCompany} from where {@link Company} data is taken.
-//     * @return The created {@link Company}.
-//     */
-//    private static Company fromDto(final JsonPlaceholderCompany companyDto) {
-//        return new Company(
-//                companyDto.getName(),
-//                companyDto.getCatchPhrase(),
-//                companyDto.getBs()
-//        );
-//    }
-//
-//    /**
-//     * Builds a {@link Photo} from the given {@code photoDto}, and the given {@code album}.
-//     *
-//     * @param photoDto The {@link JsonPlaceholderUser} from where {@link User} data is taken.
-//     * @param album    The {@link Album} that owns the photo.
-//     * @return The created {@link Photo}.
-//     */
-//    private static Photo fromDto(final JsonPlaceholderPhoto photoDto, final Album album) {
-//        return new Photo(
-//                photoDto.getId(),
-//                photoDto.getTitle(),
-//                album,
-//                photoDto.getUrl(),
-//                photoDto.getThumbnailUrl()
-//        );
-//    }
-//
-//    /**
-//     * Builds am {@link Album} from the given {@code albumDto}, and the given {@code user}.
-//     *
-//     * @param albumDto The {@link JsonPlaceholderUser} from where {@link User} data is taken.
-//     * @param user     The {@link User} that owns the album.
-//     * @return The created {@link Album}.
-//     */
-//    private static Album fromDto(final JsonPlaceholderAlbum albumDto, final User user) {
-//        return new Album(
-//                albumDto.getId(),
-//                albumDto.getTitle(),
-//                user
-//        );
-//    }
 }

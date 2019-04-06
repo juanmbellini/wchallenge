@@ -20,6 +20,7 @@ import com.bellotapps.webapps_commons.exceptions.NoSuchEntityException;
 import com.github.juanmbellini.wchallenge.jph.JsonPlaceholderClient;
 import com.github.juanmbellini.wchallenge.models.User;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderAlbum;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderComment;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderPhoto;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderUser;
 import com.github.juanmbellini.wchallenge.repositories.UserRepository;
@@ -87,5 +88,10 @@ public class Manager implements JsonPlaceholderWrapperService {
                 .map(JsonPlaceholderUser::getId)
                 .map(jsonPlaceholderClient::retrieveUserPhotos)
                 .orElseThrow(() -> new NoSuchEntityException("There is no user with the given id"));
+    }
+
+    @Override
+    public List<JsonPlaceholderComment> getComments(final String nameFilter, final String emailFilter) {
+        return jsonPlaceholderClient.retrieveComments(nameFilter, emailFilter);
     }
 }

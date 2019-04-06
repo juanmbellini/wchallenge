@@ -18,6 +18,7 @@ package com.github.juanmbellini.wchallenge.services;
 
 import com.bellotapps.webapps_commons.exceptions.NoSuchEntityException;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderAlbum;
+import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderComment;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderPhoto;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderUser;
 
@@ -68,4 +69,6 @@ public interface JsonPlaceholderWrapperService {
      * @throws NoSuchEntityException If there is no {@link JsonPlaceholderUser} with the given {@code userId}.
      */
     List<JsonPlaceholderPhoto> getUserPhotos(final long userId) throws NoSuchEntityException;
+
+    List<JsonPlaceholderComment> getComments(final String nameFilter, final String emailFilter);
 }

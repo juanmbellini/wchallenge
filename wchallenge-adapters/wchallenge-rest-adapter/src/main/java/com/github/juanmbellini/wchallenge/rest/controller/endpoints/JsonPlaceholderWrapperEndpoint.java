@@ -18,6 +18,7 @@ package com.github.juanmbellini.wchallenge.rest.controller.endpoints;
 
 import com.bellotapps.webapps_commons.config.JerseyController;
 import com.github.juanmbellini.wchallenge.rest.controller.dtos.AlbumDto;
+import com.github.juanmbellini.wchallenge.rest.controller.dtos.CommentDto;
 import com.github.juanmbellini.wchallenge.rest.controller.dtos.PhotoDto;
 import com.github.juanmbellini.wchallenge.rest.controller.dtos.UserDto;
 import com.github.juanmbellini.wchallenge.services.JsonPlaceholderWrapperService;
@@ -25,10 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.stream.Collectors;
@@ -109,5 +107,16 @@ public class JsonPlaceholderWrapperEndpoint {
                 .map(PhotoDto::fromJsonPlaceholderPhoto)
                 .collect(Collectors.toList());
         return Response.ok(photos).build();
+    }
+
+    @GET
+    @Path("/comments")
+    public Response getComments(
+            @QueryParam("name") @DefaultValue("") final String name,
+            @QueryParam("email") @DefaultValue("") final String email) {
+        final var comments = jsonPlaceholderWrapperService.getComments(name, email).stream()
+                .map(CommentDto::fromJsonPlaceholderComment)
+                .collect(Collectors.toList());
+        return Response.ok(comments).build();
     }
 }

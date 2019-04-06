@@ -103,7 +103,7 @@ public class JsonPlaceholderAddress {
 
 
     /**
-     * Data transfer object for receiving geo location information from the Json Placeholder service.
+     * Represents a geo location of the Json Placeholder Service.
      */
     public static class JsonPlaceholderGeoLocation {
 
