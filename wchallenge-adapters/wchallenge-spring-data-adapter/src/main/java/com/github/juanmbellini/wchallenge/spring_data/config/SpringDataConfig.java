@@ -16,13 +16,19 @@
 
 package com.github.juanmbellini.wchallenge.spring_data.config;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * Configuration class for Spring Data Jpa Repositories.
  */
 @Configuration
-// TODO: add @EnableJpaRepositories
-// TODO: add @EntityScan
+@ComponentScan(basePackages = {
+        "com.github.juanmbellini.wchallenge.spring_data"
+})
+@EnableJpaRepositories(basePackages = {
+        "com.github.juanmbellini.wchallenge.spring_data.interfaces",
+})
 public class SpringDataConfig {
 }

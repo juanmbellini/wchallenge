@@ -18,12 +18,10 @@ package com.github.juanmbellini.wchallenge.domain;
 
 import com.bellotapps.webapps_commons.exceptions.NoSuchEntityException;
 import com.github.juanmbellini.wchallenge.jph.JsonPlaceholderClient;
-import com.github.juanmbellini.wchallenge.models.User;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderAlbum;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderComment;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderPhoto;
 import com.github.juanmbellini.wchallenge.models.json_placeholder.JsonPlaceholderUser;
-import com.github.juanmbellini.wchallenge.repositories.UserRepository;
 import com.github.juanmbellini.wchallenge.services.JsonPlaceholderWrapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,15 +29,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Class implementing the business logic.
+ * Manager of the Json Placeholder service.
  */
 @Service
-public class Manager implements JsonPlaceholderWrapperService {
-
-    /**
-     * Repository for {@link User}s.
-     */
-    private final UserRepository userRepository;
+public class JsonPlaceholderManager implements JsonPlaceholderWrapperService {
 
     /**
      * A client for the JsonPlaceholder service.
@@ -49,12 +42,10 @@ public class Manager implements JsonPlaceholderWrapperService {
     /**
      * Constructor.
      *
-     * @param userRepository        Repository for {@link User}s.
      * @param jsonPlaceholderClient A client for the JsonPlaceholder service.
      */
     @Autowired
-    public Manager(final UserRepository userRepository, final JsonPlaceholderClient jsonPlaceholderClient) {
-        this.userRepository = userRepository;
+    public JsonPlaceholderManager(final JsonPlaceholderClient jsonPlaceholderClient) {
         this.jsonPlaceholderClient = jsonPlaceholderClient;
     }
 

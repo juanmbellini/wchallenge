@@ -17,7 +17,10 @@
 package com.github.juanmbellini.wchallenge.rest.config;
 
 import com.bellotapps.webapps_commons.config.EnableJerseyApplication;
+import com.bellotapps.webapps_commons.exceptions.CustomConstraintViolationException;
+import com.bellotapps.webapps_commons.validation.jersey.ConstraintViolationExceptionCreator;
 import com.bellotapps.webapps_commons.validation.jersey.EnableJerseyValidation;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,4 +39,15 @@ import org.springframework.context.annotation.Configuration;
 })
 @EnableJerseyValidation
 public class WebConfig {
+
+    /**
+     * Creates a bean of a {@link ConstraintViolationExceptionCreator}
+     * that supplies {@link CustomConstraintViolationException}.
+     *
+     * @return A {@link ConstraintViolationExceptionCreator}.
+     */
+    @Bean
+    public ConstraintViolationExceptionCreator constraintViolationExceptionCreator() {
+        return CustomConstraintViolationException::new;
+    }
 }

@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 /**
  * API endpoint that acts as an adapter of the {@link JsonPlaceholderWrapperService}.
  */
-@Path("")
+@Path("json-placeholder")
 @Produces(MediaType.APPLICATION_JSON)
 @JerseyController
 public class JsonPlaceholderWrapperEndpoint {
