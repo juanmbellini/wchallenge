@@ -263,7 +263,8 @@ Another feature of the service is allowing users to share albums with other user
 
 #### Permission List Entity
 
-- It is a JSON object that only contains a mandatory ```permissions``` field which is a list of permissions. It must not contain null elements.
+- It is a JSON object that only contains a mandatory ```permissions``` field which is a list of permissions. 
+- It must not be empty nor contain null elements.
 
 ##### Valid examples
 ```json
