@@ -155,6 +155,34 @@ Restart your shell session in order to have the plugin running.
 Check [this resource](https://github.com/gcuisinier/jenv#plugins) for more information about jEnv plugins.
 
 
+#### Database
+
+The project requires a PostgreSQL database.
+
+##### Create a local database (Optional)
+
+1. Install PostgreSQL
+
+```
+$ brew install postgresql
+```
+
+2. Create a user and a database for the application. You can check the [create user](https://www.postgresql.org/docs/9.6/static/sql-createuser.html) and [create database](https://www.postgresql.org/docs/9.6/static/sql-createdatabase.html) documentations to learn how to perform this step.
+
+
+##### Set up project to use the database
+
+Set the following properties with the appropiate values:
+
+- ```spring.datasource.url```
+- ```spring.datasource.username```
+- ```spring.datasource.password```
+
+You can do this by changing the ```<project-root>/wchallenge-application/src/main/resources/application.yml``` file, in the development section, or by defining the properties through the command line (with ```-Dkey=value``` properties, or with ```--key=value``` properties) when running the application.
+
+**Note:** These properties can be filled with the values of a local database, or with the values of a remote database.
+
+
 
 ### Build
 
@@ -176,8 +204,99 @@ Check [this resource](https://github.com/gcuisinier/jenv#plugins) for more infor
 	**Note:** In case you change the ```<project-root>/wchallenge-application/src/main/resources/application.yml```, you must build again the project. Otherwise, if you want to change a property on the fly, use command line properties.
 
 
+### Run
+
+You can run the application using the following command:
+
+```
+$ java [-Dkey=value properties] -jar <project-root>/wchallenge-application/target/wchallenge-application-0.0.1-SNAPSHOT.jar [--key=value properties]
+```
+
+The following is a full example of how to run the application:
+
+```
+java \
+	-Dspring.datasource.url=jdbc:postgresql://localhost:5432/wchallenge \
+	-Dspring.datasource.username=wchallenge \
+	-Dspring.datasource.password=wchallenge \
+	-jar <project-root>/wchallenge-application/target/wchallenge-application-0.0.1-SNAPSHOT.jar \
+	--spring.profiles.active=dev
+```
+
+**Note:** In case of using a new database, this will create all tables.
 
 
+## REST API Endpoints
+
+### Json Placeholder Service Wrapper
+
+This project creates an API that acts as a wrapper for the [Json Placeholder service](https://jsonplaceholder.typicode.com).
+
+
+| Action            | HTTP Method   | Url                                   | Query Params  |
+|:------------------|:--------------|:--------------------------------------|:--------------|
+| Get all users     | GET           | /json-placeholder/users               | -             |
+| Get all albums    | GET           | /json-placeholder/albums              | -             |
+| Get all photos    | GET           | /json-placeholder/photos              | -             |
+| Get user albums   | GET           | /json-placeholder/users/:id/albums    | -             |
+| Get user photos   | GET           | /json-placeholder/users/:id/photos    | -             |
+| Get user comments | GET           | /json-placeholder/users/:id/photos    | name, email   |
+
+
+### Album Sharing Service
+
+Another feature of the service is allowing users to share albums with other users, with READ and WRITE permissions.
+
+| Action                            | HTTP Method   | Url                                       | Query Params  | Entity            |
+|:----------------------------------|:--------------|:------------------------------------------|:--------------|-------------------|
+| Grant permissions to user         | PUT           | /albums/:id/shares/:userId                | -             | PermissionList    |
+| Remove permissions for user       | DELETE        | /albums/:id/shares/:userId                | -             | -                 |
+| Grant permission to user          | PUT           | /albums/:id/shares/:userId/:permission    | -             | -                 |
+| Remove permission for user        | DELETE        | /albums/:id/shares/:userId/:permission    | -             | -                 |
+| Remove all permissions for album  | DELETE        | /albums/:id/shares/                       | -             | -                 |
+| Remove all permissions for user   | DELETE        | /users/:id/permissions/                   | -             | -                 |
+| Get users with permission         | GET           | /albums/:id/shares                        | permission    | -                 |
+
+
+- **Permission path param:** The ```:permission``` path param valid values are ```READ``` and ```WRITE```.
+
+
+#### Permission List Entity
+
+- It is a JSON object that only contains a mandatory ```permissions``` field which is a list of permissions. It must not contain null elements.
+
+##### Valid examples
+```json
+{
+    "permissions": [
+        "READ",
+        "WRITE"
+    ]
+}
+
+{
+    "permissions": [
+        "WRITE"
+    ]
+}
+```
+
+##### Invalid examples
+```json
+{
+}
+
+{
+    "permissions": []
+}
+
+{
+    "permissions": [
+        "READ",
+        null
+    ]
+}
+```
 
 ## License
 
