@@ -51,6 +51,15 @@ public interface JsonPlaceholderClient {
     List<JsonPlaceholderAlbum> retrieveAlbums();
 
     /**
+     * Retrieves the {@link JsonPlaceholderUser}s in the JsonPlaceholder service that have the given {@code userIds}.
+     *
+     * @param userIds The ids of the {@link JsonPlaceholderUser}s to be retrieved.
+     * @return The {@link List} of {@link JsonPlaceholderUser}s in the JSONPlaceholder service
+     * with the given {@code userIds}.
+     */
+    List<JsonPlaceholderUser> getUsersWithIds(final List<Long> userIds);
+
+    /**
      * Retrieves the {@link JsonPlaceholderUser} with the given {@code userId}.
      *
      * @param userId The id of the {@link JsonPlaceholderUser} to be retrieved.

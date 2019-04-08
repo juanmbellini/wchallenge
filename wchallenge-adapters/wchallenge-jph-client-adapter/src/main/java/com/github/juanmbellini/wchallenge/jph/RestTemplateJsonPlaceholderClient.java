@@ -15,6 +15,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
@@ -38,6 +39,7 @@ public class RestTemplateJsonPlaceholderClient implements JsonPlaceholderClient 
      * The external service name (i.e used for reporting it when an {@link ExternalServiceException} is thrown).
      */
     private final static String SERVICE_NAME = "JsonPlaceholder";
+
 
     /**
      * The base URL of the Json Placeholder service.
@@ -119,13 +121,25 @@ public class RestTemplateJsonPlaceholderClient implements JsonPlaceholderClient 
     }
 
     @Override
-    public Optional<JsonPlaceholderUser> getUserById(final long userId) {
-        // TODO: improve this
-        try {
-            return Optional.ofNullable(getEntity(UserDto.class, baseUrl + "/users/{id}", userId));
-        } catch (final ExternalServiceException e) {
-            return Optional.empty();
+    public List<JsonPlaceholderUser> getUsersWithIds(final List<Long> userIds) {
+        Assert.notNull(userIds, "The user ids list must not be null");
+        if (userIds.isEmpty()) {
+            return Collections.emptyList();
         }
+        final var url = Stream.generate(() -> "id={userId}")
+                .limit(userIds.size())
+                .collect(Collectors.joining("&", baseUrl + "/users?", ""));
+        return getList(userDtoParameterizedTypeReference, url, userIds.toArray())
+                .stream()
+                .map(dto -> (JsonPlaceholderUser) dto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<JsonPlaceholderUser> getUserById(final long userId) {
+        return getEntity(UserDto.class, baseUrl + "/users/{id}", userId)
+                .map(Function.identity()) // This mapping solves the casting issues
+                ;
     }
 
     @Override
@@ -232,13 +246,15 @@ public class RestTemplateJsonPlaceholderClient implements JsonPlaceholderClient 
      * @param <E>          The type of the entity.
      * @return The downloaded entity.
      */
-    private <E> E getEntity(
+    private <E> Optional<E> getEntity(
             final Class<E> klass,
             final String url,
             final Object... uriVariables)
             throws ExternalServiceException {
         try {
-            return restTemplate.getForObject(url, klass, uriVariables);
+            return Optional.ofNullable(restTemplate.getForObject(url, klass, uriVariables));
+        } catch (final HttpClientErrorException.NotFound e) {
+            return Optional.empty();
         } catch (final RestClientException e) {
             throw new ExternalServiceException(SERVICE_NAME, "Exception encountered when accessing JsonPlaceholder", e);
         }

@@ -94,5 +94,4 @@ public interface SharedAlbumsService {
      * over the album with the given {@code albumId}.
      */
     List<JsonPlaceholderUser> hasPermission(final long albumId, final Permission permission);
-
 }

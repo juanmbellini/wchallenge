@@ -29,7 +29,6 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -108,15 +107,11 @@ public class SharedAlbumsManager implements SharedAlbumsService {
 
     @Override
     public List<JsonPlaceholderUser> hasPermission(final long albumId, final Permission permission) {
-        // TODO: create some method in the JsonPlaceholderClient to retrieve all the users with the given ids.
-        //  This avoids N requests
-        return sharedAlbumPermissionsRepository.usersWithPermission(albumId, permission)
+        final var userIds = sharedAlbumPermissionsRepository.usersWithPermission(albumId, permission)
                 .stream()
                 .distinct()
-                .map(jsonPlaceholderClient::getUserById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .collect(Collectors.toList());
+        return jsonPlaceholderClient.getUsersWithIds(userIds);
     }
 
 
